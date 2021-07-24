@@ -15,14 +15,29 @@ public class CalculatorTest extends Assert{
         assertEquals(10,cal.add(-10,20));
     }
 
+    @Test(expected = ArithmeticException.class)
+    public void testAddBigNumbers(){
+        assertEquals("Overflow",cal.add(2147483647,2147483647));
+    }
+
     @Test
     public void testSubtract(){
         assertEquals(20,cal.subtract(-10,-30));
     }
 
+    @Test(expected = ArithmeticException.class)
+    public void testSubtractBigNumbers(){
+        assertEquals("Overflow",cal.subtract(-2147483647,2147483647));
+    }
+
     @Test
     public void testMultiply(){
         assertEquals(-100,cal.multiply(-25,4));
+    }
+
+    @Test(expected = ArithmeticException.class)
+    public void testMultiplyBigNumbers(){
+        assertEquals("Overflow",cal.multiply(123456789,2147483647));
     }
 
     @Test
