@@ -1,8 +1,8 @@
-import junit.framework.TestCase;
+import org.junit.Assert;
 import org.junit.Before;
-import java.lang.Math;
+import org.junit.Test;
 
-public class CalculatorTest extends TestCase{
+public class CalculatorTest extends Assert{
 
     Calculator cal;
     @Before
@@ -10,55 +10,39 @@ public class CalculatorTest extends TestCase{
         cal = new Calculator();
     }
 
-    public void testAdd() {
-        /* for(int i = -100;i<=100;i++){
-            for(int j = -100;j<=100;j++){
-                assertEquals(i+j,cal.add(i,j));
-            }
-        } */
-
-        assertEquals(5,cal.add(3,2));
-        assertEquals(10,cal.add(-15,25));
+    @Test
+    public void testAdd(){
+        assertEquals(10,cal.add(-10,20));
     }
 
-    public void testSubtract() {
-        for(int i = -100;i<=100;i++){
-            for(int j = -100;j<=100;j++){
-                assertEquals(i-j,cal.subtract(i,j));
-            }
-        }
+    @Test
+    public void testSubtract(){
+        assertEquals(20,cal.subtract(-10,-30));
     }
 
-    public void testMultiply() {
-        for(int i = -100;i<=100;i++){
-            for(int j = -100;j<=100;j++){
-                assertEquals(i*j,cal.multiply(i,j));
-            }
-        }
+    @Test
+    public void testMultiply(){
+        assertEquals(-100,cal.multiply(-25,4));
     }
 
-    public void testDivide() {
-        for(int i = -100;i<=100;i++){
-            for(int j = -100;j<=100;j++){
-                try{
-                    assertEquals((double) i/j,cal.divide(i,j));
-                }
-                catch (Exception error){
-                    assertEquals("Can not divide by zero ;)",error.getMessage());
-                }
-            }
-        }
+    @Test
+    public void testDivide(){
+        assertEquals(2.5,cal.divide(5,2),.0000001); // Using error +- 10^-7
     }
 
-
-    public void testSquareRoot() {
-        for(int i = -100;i <= 100;i++){
-            try{
-                assertEquals(Math.sqrt(i),cal.squareRoot(i));
-            }
-            catch (Exception error){
-                assertEquals("No real roots of negative numbers ;)",error.getMessage());
-            }
-        }
+    @Test(expected = IllegalArgumentException.class)
+    public void testDivisionByZero(){
+        assertEquals("Can not divide by zero ;)",cal.divide(10,0));
     }
+
+    @Test
+    public void testSquareRoot(){
+        assertEquals(1.41,cal.squareRoot(2),.01); // using error +- .01
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testSquareRootOfNegativeNumber(){
+        assertEquals("No real roots of negative numbers ;)",cal.squareRoot(-5));
+    }
+
 }
